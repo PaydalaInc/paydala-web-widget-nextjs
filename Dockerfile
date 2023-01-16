@@ -5,7 +5,7 @@ WORKDIR /app
 ARG NPM_TOKEN  
 COPY .npmrc.docker .npmrc  
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 RUN rm -f .npmrc
 
 # Rebuild the source code only when needed
