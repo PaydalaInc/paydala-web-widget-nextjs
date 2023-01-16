@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      args:
+        - NPM_TOKEN=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
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command:
+      - npm
+      - start
