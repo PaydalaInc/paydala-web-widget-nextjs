@@ -4,16 +4,17 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 ARG NPM_TOKEN  
 COPY .npmrc.docker .npmrc  
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+COPY package.json yarn.lock* ./
+RUN yarn --frozen-lockfile
 RUN rm -f .npmrc
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 WORKDIR /app
-COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
-RUN npm run build
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED 1
+RUN yarn build
 
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner
@@ -24,8 +25,8 @@ ENV NODE_ENV production
 ARG user=nextjs
 ARG group=nodejs
 ARG usergroup=${user}:${group}
-RUN adduser -u 1001 -S ${user}
-RUN addgroup -g 1001 -S ${group}
+RUN addgroup --system --gid 1001 ${group}
+RUN adduser --system --uid 1001 ${user}
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=${usergroup} /app/.next/standalone ./
@@ -34,3 +35,5 @@ COPY --from=builder --chown=${usergroup} /app/.next/static ./.next/static
 USER ${user}
 
 EXPOSE 3000
+
+CMD ["node_modules/.bin/next", "start"]
