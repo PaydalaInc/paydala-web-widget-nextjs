@@ -34,6 +34,6 @@ COPY --from=builder --chown=${usergroup} /app/.next/static ./.next/static
 
 USER ${user}
 
-EXPOSE 3000
+EXPOSE 80
 
-CMD ["node_modules/.bin/next", "start"]
+CMD ["node", "server.js"]
