@@ -29,6 +29,10 @@ RUN addgroup --system --gid 1001 ${group}
 RUN adduser --system --uid 1001 ${user}
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=${usergroup} /app/.next/standalone ./
 COPY --from=builder --chown=${usergroup} /app/.next/static ./.next/static
 
@@ -36,4 +40,4 @@ USER ${user}
 
 EXPOSE 3000
 
-CMD ["node_modules/.bin/next", "start"]
+CMD [“node”, “server.js”]
