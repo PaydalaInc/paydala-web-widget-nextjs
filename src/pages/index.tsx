@@ -57,10 +57,11 @@ function Home({ CJWT, environment }: WidgetProps) {
       }
     }
   );
+
   useEffect(() => {
     if (CJWT === undefined) return;
     if (environment === undefined) return;
-    navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition((position) => {
       identifyPartner(
         {
           CJWT,
@@ -79,6 +80,7 @@ function Home({ CJWT, environment }: WidgetProps) {
       );
     });
   }, [CJWT, environment, identifyPartner, push]);
+
   return (
     <>
       <Head>
@@ -102,8 +104,8 @@ function Home({ CJWT, environment }: WidgetProps) {
               {error
                 ? error
                 : partner
-                ? `Redirecting to ${partner.partner.company} payment widget...`
-                : "Validating Payment flow..."}
+                  ? `Redirecting to ${partner.partner.company} payment widget...`
+                  : "Validating Payment flow..."}
             </Text>
           </VStack>
         </Center>

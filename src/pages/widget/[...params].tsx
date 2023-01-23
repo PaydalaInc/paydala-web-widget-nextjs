@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { GetServerSideProps } from "next/types";
+import { Container } from "@chakra-ui/react";
 import Head from "next/head";
 import { PaydalaWidget } from "@paydala-payments/react-web-sdk";
 import { useRouter } from "next/router";
@@ -26,7 +26,12 @@ function Widget() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <Container
+        maxW={"container.sm"}
+        height={"100vh"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
         <PaydalaWidget
           redirectUrl={URL}
           operatorJWT={params[0]}
@@ -34,7 +39,7 @@ function Widget() {
           isWebView={true}
           onClose={(e: any) => console.log({ onClose: e })}
         />
-      </main>
+      </Container>
     </>
   );
 }

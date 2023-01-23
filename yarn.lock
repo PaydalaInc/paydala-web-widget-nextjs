@@ -1176,10 +1176,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@paydala-payments/react-web-sdk@^0.1.17":
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/@paydala-payments/react-web-sdk/-/react-web-sdk-0.1.17.tgz#53c644b7a6790f8a0fdf67574af99a03bfc175ee"
-  integrity sha512-4anyAFJ3CIt2mRWd47SqtEZQ0JQKHeX5YZ3rHmgPDyxsRCJcF4qUjMElbY3pHuiUzv7M2vr/QFTTSbD5u65Z0w==
+"@paydala-payments/react-web-sdk@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@paydala-payments/react-web-sdk/-/react-web-sdk-0.1.18.tgz#72ae74c039c4f9bd6d1265575a1a8c31efb8608e"
+  integrity sha512-Q9+vZiqs4DyMdPgmc0uPrTZxwd+yVC/Nj6UF4hD7387goMxBUIZ9VcdPlFVWICj6orKmv2q/NCH+VOWCUETQQg==
   dependencies:
     "@emotion/react" "^11.9.3"
     "@emotion/styled" "^11.9.3"
