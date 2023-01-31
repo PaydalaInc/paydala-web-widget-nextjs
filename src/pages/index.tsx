@@ -1,5 +1,5 @@
 import { Center, Container, Spinner, Text, VStack } from "@chakra-ui/react";
-import { Partner, getApiUrl } from "@paydala-payments/react-web-sdk";
+import { Partner, Prefill, getApiUrl } from "@paydala-payments/react-web-sdk";
 import { useEffect, useState } from "react";
 
 import { GetServerSideProps } from "next/types";
@@ -10,20 +10,21 @@ import { useRouter } from "next/router";
 interface WidgetProps {
   CJWT: string;
   environment: string;
+  prefill?: Prefill;
 }
 
-function Home({ CJWT, environment }: WidgetProps) {
+function Home({ CJWT, environment, prefill }: WidgetProps) {
   const { push } = useRouter();
   const [partner, setPartner] = useState<Partner | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (partner !== undefined) {
-        push(`/widget/${CJWT}/${environment}`);
+        push(`/widget/${CJWT}/${environment}/${JSON.stringify(prefill)}`);
       }
     }, 3000);
     return () => clearTimeout(timeout);
-  }, [CJWT, environment, partner, push]);
+  }, [CJWT, environment, partner, prefill, push]);
 
   const { mutate: identifyPartner } = useMutation(
     async ({
@@ -47,13 +48,14 @@ function Home({ CJWT, environment }: WidgetProps) {
           },
         }
       );
+      const responseJson = await response.json();
       if (response.status === 403) {
-        throw new Error("Invalid Location");
+        throw new Error(responseJson.error ?? "Unable to identify partner");
       }
       if (response.status === 200) {
-        return response.json();
+        return responseJson;
       } else {
-        throw new Error("Unable to identify partner");
+        throw new Error(responseJson.error ?? "Unable to identify partner");
       }
     }
   );
@@ -66,6 +68,8 @@ function Home({ CJWT, environment }: WidgetProps) {
         {
           CJWT,
           environment,
+          // latitude: 12.928764,
+          // longitude: 77.636692,
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         },
@@ -104,8 +108,8 @@ function Home({ CJWT, environment }: WidgetProps) {
               {error
                 ? error
                 : partner
-                  ? `Redirecting to ${partner.partner.company} payment widget...`
-                  : "Validating Payment flow..."}
+                ? `Redirecting to ${partner.partner.company} payment widget...`
+                : "Validating Payment flow..."}
             </Text>
           </VStack>
         </Center>
@@ -117,12 +121,21 @@ function Home({ CJWT, environment }: WidgetProps) {
 export const getServerSideProps: GetServerSideProps<WidgetProps> = async (
   context
 ) => {
+  let prefill = undefined;
+  try {
+    prefill =
+      context.req.headers["prefill"] ??
+      JSON.parse((context.query.prefill as string).slice(0, -1));
+  } catch (e) {
+    prefill = undefined;
+  }
   const _props: WidgetProps = {
     CJWT:
       context.req.headers["authorization"] ??
       (context.query.authorization as string) ??
       "",
     environment: (context.query.environment as string) ?? "",
+    prefill,
   };
   return { props: _props };
 };

@@ -18,6 +18,11 @@ function Widget() {
   if (!params || params.length < 2) {
     return null;
   }
+  let prefill = undefined;
+  if (params[2]) {
+    prefill = JSON.parse(params[2]);
+  }
+  console.log({ prefill });
   return (
     <>
       <Head>
@@ -36,6 +41,7 @@ function Widget() {
           redirectUrl={URL}
           operatorJWT={params[0]}
           environment={params[1]}
+          defaultUser={prefill}
           isWebView={true}
           onClose={(e: any) => console.log({ onClose: e })}
         />
