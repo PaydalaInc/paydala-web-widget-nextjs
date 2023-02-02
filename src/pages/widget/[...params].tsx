@@ -22,7 +22,6 @@ function Widget() {
   if (params[2]) {
     prefill = JSON.parse(params[2]);
   }
-  console.log({ prefill });
   return (
     <>
       <Head>
