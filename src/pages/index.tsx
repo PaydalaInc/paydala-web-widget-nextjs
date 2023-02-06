@@ -8,9 +8,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 interface WidgetProps {
-  CJWT: string;
-  environment: string;
-  prefill?: Prefill;
+  CJWT: string | null;
+  environment: string | null;
+  prefill: Prefill | null;
 }
 
 function Home({ CJWT, environment, prefill }: WidgetProps) {
@@ -61,8 +61,8 @@ function Home({ CJWT, environment, prefill }: WidgetProps) {
   );
 
   useEffect(() => {
-    if (CJWT === undefined) return;
-    if (environment === undefined) return;
+    if (CJWT === null) return;
+    if (environment === null) return;
     navigator.geolocation.getCurrentPosition((position) => {
       identifyPartner(
         {
@@ -121,20 +121,23 @@ function Home({ CJWT, environment, prefill }: WidgetProps) {
 export const getServerSideProps: GetServerSideProps<WidgetProps> = async (
   context
 ) => {
-  let prefill = undefined;
+  let prefill = null;
   try {
     prefill =
-      context.req.headers["prefill"] ??
-      JSON.parse((context.query.prefill as string).slice(0, -1));
+      context.req.headers["prefill"] ?? context.query.prefill
+        ? JSON.parse((context.query.prefill as string).slice(0, -1))
+        : null;
   } catch (e) {
-    prefill = undefined;
+    prefill = null;
   }
   const _props: WidgetProps = {
     CJWT:
       context.req.headers["authorization"] ??
       (context.query.authorization as string) ??
-      "",
-    environment: (context.query.environment as string) ?? "",
+      null,
+    environment: context.query.environment
+      ? (context.query.environment as string)
+      : null,
     prefill,
   };
   return { props: _props };
