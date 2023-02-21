@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       args:
-        - NPM_TOKEN=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
+        - NPM_TOKEN=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
     volumes:
       - .:/app
     ports:
