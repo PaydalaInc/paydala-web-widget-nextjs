@@ -18,13 +18,11 @@ function Home({ CJWT, environment, prefill }: WidgetProps) {
   const [partner, setPartner] = useState<Partner | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (partner !== undefined) {
-        push(`/widget/${CJWT}/${environment}/${JSON.stringify(prefill)}`);
-      }
-    }, 3000);
-    return () => clearTimeout(timeout);
-  }, [CJWT, environment, partner, prefill, push]);
+    if (partner !== undefined) {
+      push(`/widget/${CJWT}/${environment}/${JSON.stringify(prefill)}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [partner]);
 
   const { mutate: identifyPartner } = useMutation(
     async ({
