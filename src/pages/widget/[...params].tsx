@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Container } from "@chakra-ui/react";
+import { Environment } from "@paydala-payments/react-web-sdk/dist/models/paydala";
 import Head from "next/head";
 import { PaydalaWidget } from "@paydala-payments/react-web-sdk";
 import { useRouter } from "next/router";
@@ -39,7 +40,7 @@ function Widget() {
         <PaydalaWidget
           redirectUrl={URL}
           operatorJWT={params[0]}
-          environment={params[1]}
+          environment={params[1] as Environment}
           defaultUser={prefill}
           isWebView={true}
           onClose={(e: any) => console.log({ onClose: e })}
