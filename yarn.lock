@@ -1176,10 +1176,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@paydala-payments/react-web-sdk@^0.1.25":
-  version "0.1.25"
-  resolved "https://registry.yarnpkg.com/@paydala-payments/react-web-sdk/-/react-web-sdk-0.1.25.tgz#8d4559d42429f1724ca7d5edbbde76f48064fc40"
-  integrity sha512-rAuFkOYFNnWvpBGHDzzAwhGqJjHOilZnm71KfRIZwe2myAnYrv4SOIxBVCrDXvzvr0YUALRW8miR4gD24PXPbA==
+"@paydala-payments/react-web-sdk@^0.1.26":
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/@paydala-payments/react-web-sdk/-/react-web-sdk-0.1.26.tgz#58ff43763c6c6f6045aa38e7cee716b4916ce2dc"
+  integrity sha512-yDuMV3W2kBXxNyWNbpb5P0shXK77hjLDCGhIpi0XDrDBAWz4CKxjZuMdbSWy8cX4mdtdQMzk4ZWcLdlhv2OY7g==
   dependencies:
     "@emotion/react" "^11.9.3"
     "@emotion/styled" "^11.9.3"
@@ -1223,7 +1223,7 @@
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.22.0.tgz#7a786fcea64e229ed5d4308093dd644cdfaa895e"
   integrity sha512-OeLyBKBQoT265f5G9biReijeP8mBxNFwY7ZUu1dKL+YzqpG5q5z7J/N1eT8aWyKuhyDTiUHuKm5l+oIVzbtrjw==
 
-"@tanstack/react-query@^4.0.10", "@tanstack/react-query@^4.22.0":
+"@tanstack/react-query@^4.0.10":
   version "4.22.0"
   resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.22.0.tgz#aaa4b41a6d306be6958018c74a8a3bb3e9f1924c"
   integrity sha512-P9o+HjG42uB/xHR6dMsJaPhtZydSe4v0xdG5G/cEj1oHZAXelMlm67/rYJNQGKgBamKElKogj+HYGF+NY2yHYg==
